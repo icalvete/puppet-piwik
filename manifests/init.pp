@@ -19,9 +19,9 @@ class piwik (
   $db_user          = 'root',
   $db_pass          = '',
   $db_name          = 'piwik',
-  $ssl_cert         = undef,
-  $ssl_cert_key     = undef,
-  $ssl_cert         = undef,
+  $ssl_cert         = false,
+  $ssl_cert_key     = false,
+  $ssl_cert_ca      = false,
 
 ) inherits piwik::params {
 
@@ -41,7 +41,7 @@ class piwik (
     fail("admin_token_auth param is mandatory.")
   }
 
-  $url = "${host}.${domain}" 
+  $url = "${host}.${domain}"
 
   anchor {'piwik::begin':
     before => Class['piwik::install']
