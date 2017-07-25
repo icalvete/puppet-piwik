@@ -17,8 +17,6 @@ define piwik::user (
   case $ensure {
     'present' : {
    
-      notify{"/usr/bin/curl --silent --insecure --header 'Host: ${piwik::url}' 'https://localhost/?module=API&method=UsersManager.us    erExists&userLogin=${name}&token_auth=${token_auth_final}' | /bin/grep true":}
-
       if !$password {
         fail("password param is mandatory.")
       }
@@ -32,7 +30,7 @@ define piwik::user (
       exec { "set_admin_piwik_user_${name}":
         command => "/usr/bin/curl --silent --insecure --header 'Host: ${piwik::url}' 'https://localhost/?module=API&method=UsersManager.setSuperUserAccess&userLogin=${name}&hasSuperUserAccess=${admin}&token_auth=${token_auth_final}'",
         user    => 'root',
-        unless  => "/usr/bin/curl --silent --insecure --header 'Host: ${piwik::url}' 'https://localhost/?module=API&method=UsersManager.userExists&userLogin=${name}&token_auth=${token_auth_final}&format=json' | /bin/grep true"
+        require => Exec["create_piwik_user_${name}"]
       }
     }
     'absent': {
