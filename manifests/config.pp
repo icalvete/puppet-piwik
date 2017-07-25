@@ -1,0 +1,2 @@
+class piwik::config {
+}
