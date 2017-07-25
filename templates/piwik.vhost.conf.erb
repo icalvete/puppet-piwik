@@ -87,17 +87,17 @@
         #   If both key and certificate are stored in the same file, only the
         #   SSLCertificateFile directive is needed.
 <% if @ssl_cert -%>
-        SSLCertificateFile    /etc/ssl/certs/<%= @ssl_cert -%>
+        SSLCertificateFile    /etc/ssl/certs/<%= @ssl_cert %>
 <% else -%>
         SSLCertificateFile    /etc/ssl/certs/ssl-cert-snakeoil.pem
 <% end -%>
 <% if @ssl_cert_key -%>
-        SSLCertificateKeyFile /etc/ssl/private/<%= @ssl_cert_key -%>
+        SSLCertificateKeyFile /etc/ssl/private/<%= @ssl_cert_key %>
 <% else -%>
         SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
 <% end -%>
 <% if @ssl_cert_ca -%>
-        SSLCertificateChainFile /etc/ssl/certs/<%= @ssl_cert_ca -%>
+        SSLCertificateChainFile /etc/ssl/certs/<%= @ssl_cert_ca %>
 <% end -%>
 
         #   Server Certificate Chain:
