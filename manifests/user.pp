@@ -16,7 +16,7 @@ define piwik::user (
 
   case $ensure {
     'present' : {
-   
+
       if !$password {
         fail("password param is mandatory.")
       }
