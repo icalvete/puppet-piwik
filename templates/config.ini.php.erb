@@ -8,7 +8,14 @@ require 'digest/md5'
 
 -%>
 ; <?php exit; ?> DO NOT REMOVE THIS LINE
+[Tracker]
 ; file automatically generated or modified by Piwik; you can manually override the default values in global.ini.php by redefining them in this file.
+; length of a visit in seconds. If a visitor comes back on the website visit_standard_length seconds
+; after their last page view, it will be recorded as a new visit. In case you are using the Piwik JavaScript tracker to
+; calculate the visit count correctly, make sure to call the method "setSessionCookieTimeout" eg
+; `_paq.push(['setSessionCookieTimeout', timeoutInSeconds=1800])`
+visit_standard_length = <%= scope.lookupvar('piwik::visit_standard_length') -%>
+
 [database]
 host = "<%= scope.lookupvar('piwik::db_host') -%>"
 username = "<%= scope.lookupvar('piwik::db_user') -%>"
