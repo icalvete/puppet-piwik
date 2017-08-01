@@ -1,0 +1,16 @@
+<%
+
+require 'digest/md5'
+
+@now_formated        = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+
+@admin_password      = scope.lookupvar('piwik::admin_password')
+@admin_password_hash = `php -r "echo md5('@admin_password');"`
+@admin_token_auth    = scope.lookupvar('piwik::admin_token_auth')
+
+-%>
+
+LOCK TABLES `user` WRITE;
+INSERT INTO `user` VALUES ('anonymous','','anonymous','anonymous@example.org','anonymous',0,'<%= @now_formated -%>');
+INSERT INTO `user` VALUES ('token','<%= @admin_password_hash -%>','token','','<%= @admin_token_auth -%>',1,'<%= @now_formated -%>');
+UNLOCK TABLES;

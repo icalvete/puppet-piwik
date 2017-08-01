@@ -44,33 +44,20 @@ class piwik::install {
     backup  => true
   }
 
-  file {'piwik_sql_file':
+  file {'schema_sql_file':
     ensure  => present,
-    path    => "${piwik::root_path}/piwik.sql",
+    path    => "${piwik::root_path}/schema.sql",
     mode    => '0664',
-    content => template("${module_name}/piwik.sql.erb"),
+    content => template("${module_name}/schema.sql.erb"),
     require => File['piwik_file_permisions']
   }
 
-  exec {'apply_piwik_sql_file':
-    command  => "/usr/bin/mysql -h ${piwik::db_host} -u${piwik::db_user} -p${piwik::db_pass} ${piwik::db_name} < ${piwik::root_path}/piwik.sql",
+  exec {'apply_schema_sql_file':
+    command  => "/usr/bin/mysql -h ${piwik::db_host} -u${piwik::db_user} -p${piwik::db_pass} ${piwik::db_name} < ${piwik::root_path}/schema.sql",
     user     => 'root',
-    require  => File['piwik_sql_file'],
-    unless   => "/bin/echo \"SELECT alias FROM user WHERE login='admin';\" | /usr/bin/mysql -h 192.168.33.15 -upiwik -ppiwik piwik | /bin/grep admin",
+    require  => File['schema_sql_file'],
+    unless   => "/bin/echo \"SHOW TABLES FROM ${piwik::db_name} LIKE 'user%';\" | /usr/bin/mysql -N -h ${piwik::db_host} -u${piwik::db_user} -p${piwik::db_pass} ${piwik::db_name} | wc -l | /bin/grep -w 5",
     provider => 'shell'
-  }
-
-  piwik::user {$piwik::admin:
-    password => $piwik::admin_password,
-    email    => $piwik::admin_email,
-    alias    => 'admin',
-    admin    => true,
-    require  => Exec['apply_piwik_sql_file']
-  }
-
-  piwik::site {'test':
-    url => 'http://test.org',
-    require  => Exec['apply_piwik_sql_file']
   }
 }
 
