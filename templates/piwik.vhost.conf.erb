@@ -8,36 +8,7 @@
   ServerName <%= @piwik_servername %>
   DocumentRoot <%= scope.lookupvar('piwik::root_path') %>/piwik
 
-  Header set Access-Control-Allow-Origin "*"
-  Header set Access-Control-Allow-Methods "GET,POST,HEAD,DELETE,PUT,OPTIONS"
-
-  RewriteEngine On
-
-  <Directory />
-		Options FollowSymLinks
-		AllowOverride None
-  </Directory>
-
-	<Directory <%= scope.lookupvar('piwik::root_path') -%>/piwik>
-		Options Indexes FollowSymLinks MultiViews
-		AllowOverride None
-<% if @apache26 -%>
-    Require all granted
-<% else -%>
-		Order allow,deny
-		allow from all
-<% end -%>
-	</Directory>
-
-	# Possible values include: debug, info, notice, warn, error, crit,
-	# alert, emerg.
-	LogLevel warn
-
-  #ErrorLog '|/usr/bin/logger -p local3.info -t ::apache::<%= scope.lookupvar('apache2::env') -%>::error'
-  ErrorLog  syslog:local3
-  #CustomLog '|/usr/bin/logger -p local3.info -t ::apache::<%= scope.lookupvar('apache2::env') -%>::access' combined_sp=!forwarded
-  #CustomLog '|/usr/bin/logger -p local3.info -t ::apache::<%= scope.lookupvar('apache2::env') -%>::access' combined_sp_proxy env=forwarded
-  CustomLog '|/usr/bin/logger -p local3.info -t ::apache::<%= scope.lookupvar('apache2::env') -%>::access' combined_sp_proxy
+  RedirectPermanent / https://<%= @piwik_servername %>
 
 </VirtualHost>
 
