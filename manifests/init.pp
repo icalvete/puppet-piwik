@@ -26,6 +26,9 @@ class piwik (
 
 ) inherits piwik::params {
 
+  $url = "${host}.${domain}"
+  $piwik_servername = $url
+
   if !$admin {
     fail('admin param is mandatory.')
   }
@@ -41,8 +44,6 @@ class piwik (
   if !$admin_token_auth {
     fail('admin_token_auth param is mandatory.')
   }
-
-  $url = "${host}.${domain}"
 
   anchor {'piwik::begin':
     before => Class['piwik::install']

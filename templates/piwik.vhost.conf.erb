@@ -1,7 +1,8 @@
 <%
- @ssl_cert     = scope.lookupvar('piwik::ssl_cert')
- @ssl_cert_key = scope.lookupvar('piwik::ssl_cert_key')
- @ssl_cert_ca  = scope.lookupvar('piwik::ssl_cert_ca')
+ @piwik_servername = scope.lookupvar('piwik::piwik_servername')
+ @ssl_cert         = scope.lookupvar('piwik::ssl_cert')
+ @ssl_cert_key     = scope.lookupvar('piwik::ssl_cert_key')
+ @ssl_cert_ca      = scope.lookupvar('piwik::ssl_cert_ca')
 %>
 <VirtualHost *:80>
 

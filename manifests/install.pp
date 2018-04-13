@@ -27,7 +27,6 @@ class piwik::install {
     require => Exec['piwik_install_package']
   }
 
-  $piwik_servername = $piwik::url
   apache2::site{'piwik.vhost.conf':
     source  => "${module_name}/piwik.vhost.conf.erb",
     require => Class['roles::apache2_server']

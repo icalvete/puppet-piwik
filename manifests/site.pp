@@ -4,7 +4,7 @@ define piwik::site (
   $url        = undef,
   $ecommerce  = 0,
   $timezone   = 'Europe/Madrid',
-  $currency   = EUR,
+  $currency   = 'EUR',
   $token_auth = undef,
 ) {
   include piwik
@@ -18,9 +18,11 @@ define piwik::site (
   case $ensure {
     'present' : {
 
+      /*
       if !$url {
         fail('url param is mandatory.')
       }
+      */
 
       exec { "create_piwik_site_${name}":
         command => "/usr/bin/curl --silent --insecure --header 'Host: ${piwik::url}' 'http://localhost/?module=API&method=SitesManager.addSite&siteName=$name&urls=${url}&ecommerce=${ecommerce}&timezone=${timezone}&currency=${currency}&token_auth=${token_auth_final}'",
