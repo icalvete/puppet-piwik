@@ -1,7 +1,7 @@
 define piwik::site (
 
   $ensure     = 'present',
-  $url        = undef,
+  $url        = '',
   $ecommerce  = 0,
   $timezone   = 'Europe/Madrid',
   $currency   = 'EUR',
@@ -20,7 +20,7 @@ define piwik::site (
 
       /*
       if !$url {
-        fail('url param is mandatory.')
+        #fail('url param is mandatory.')
       }
       */
 

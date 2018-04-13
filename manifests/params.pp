@@ -8,7 +8,7 @@ class piwik::params {
     }
   }
 
-  $version               = '3.0.4'
+  $version               = '3.2.0'
   $root_path             = '/opt'
   $repo_scheme           = 'http'
   $repo_domain           = 'builds.piwik.org'
