@@ -45,6 +45,12 @@ class piwik::config {
     require => Exec['apply_schema_sql_file', 'apply_options_sql_file', 'apply_users_sql_file']
   }
 
+  #
+  # DEPRECATED
+  #
+  # https://support.maxmind.com/geolite-legacy-discontinuation-notice/
+
+/*
   cron{ 'update_piwik_geoip_database':
     command => "/usr/bin/flock /tmp/update_piwik_geoip_database /usr/bin/curl -s http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz | /bin/gunzip > ${piwik::root_path}/piwik/misc/GeoLiteCity.dat",
     user    => 'root',
@@ -52,4 +58,5 @@ class piwik::config {
     minute  => '0',
     weekday => '7'
   }
+*/
 }
